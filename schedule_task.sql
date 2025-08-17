@@ -18,6 +18,10 @@ INSERT INTO raw_transactions VALUES
 (8, 108, 1008, 1, '2024-12-03 09:30:00', 'canceled'),
 (9, 109, 1009, 3, '2024-12-03 10:45:00', 'completed');
 
+INSERT INTO raw_transactions VALUES
+(10, 107, 1007, 2, '2024-12-03 08:00:00', 'completed'),
+(11, 108, 1008, 1, '2024-12-03 09:30:00', 'canceled'),
+(12, 109, 1009, 3, '2024-12-03 10:45:00', 'completed');
 
 CREATE OR REPLACE TABLE filtered_transactions (
     transaction_id INT,
@@ -88,6 +92,11 @@ WHEN NOT MATCHED THEN INSERT (
     src.transaction_date, src.total_quantity, src.completed_transactions, src.refunded_transactions
 );
 
+
+ALTER TASK aggregate_transactions_task RESUME;
+ALTER TASK filter_transactions_task RESUME;
+
+
 --- By default, a new task is created in a suspended state. You need to resume it to start its execution as per the defined schedule.
 ALTER TASK filter_transactions_task SUSPEND;
 ALTER TASK aggregate_transactions_task SUSPEND;
@@ -101,5 +110,7 @@ SELECT * FROM TABLE(INFORMATION_SCHEMA.TASK_HISTORY(TASK_NAME=>'aggregate_transa
 SHOW TASKS;
 
 select * from filtered_transactions;
+
+select count(*) from filtered_transactions;
 
 select * from aggregated_transactions;
