@@ -3,7 +3,6 @@
 This project demonstrates how to build a simple **ETL pipeline in Snowflake** using **tables, scheduled tasks, and merges**.
 It simulates raw transaction ingestion, filtering, and daily aggregation.
 
----
 
 ## 📌 Project Overview
 
@@ -15,7 +14,7 @@ We define **three tables** and **two tasks**:
 * **`filter_transactions_task`** → scheduled job that filters and merges into `filtered_transactions`.
 * **`aggregate_transactions_task`** → runs after Task 1 and aggregates daily data.
 
-  ![scheduling_task](architecture-task-scheduling.png)
+![p](architecture-task-scheduling.png)
 
 ---
 
